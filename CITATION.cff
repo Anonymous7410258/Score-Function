@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Meta-Topological Test-Time Adaptive Score Matching"
+type: software
+authors:
+  - name: "Anonymous"
+date-released: "2025-01-01"
+license: MIT
+repository-code: "https://github.com/anonymous/meta-tta-tsm"
+keywords:
+  - score matching
+  - missing data
+  - persistent homology
+  - meta-learning
+  - test-time adaptation
+  - topological data analysis
+preferred-citation:
+  type: conference-paper
+  title: "Meta-Topological Test-Time Adaptive Score Matching"
+  authors:
+    - name: "Anonymous"
+  collection-title: "International Conference on Machine Learning (ICML)"
+  year: 2025

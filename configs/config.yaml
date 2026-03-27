@@ -1,0 +1,59 @@
+# =============================================================================
+# Meta-TTA-TSM: Master Configuration
+# =============================================================================
+# This file contains the default configuration for all components.
+# Override specific values via command-line arguments or separate config files.
+
+# --- Model Configuration ---
+model:
+  # Score network architecture
+  score_network:
+    input_dim: 50              # Data dimensionality d
+    hidden_dims: [256, 256, 128]  # Hidden layer sizes
+    activation: "elu"          # Activation function (elu, relu, silu)
+    use_residual: true         # Residual connections
+    dropout: 0.0               # Dropout rate
+
+  # Hypernetwork architecture
+  hypernetwork:
+    topo_feature_dim: 100      # Persistence image feature dimension m
+    hidden_dims: [512, 512]    # Hypernetwork hidden layers
+    activation: "relu"
+    use_spectral_norm: true    # Enforce Lipschitz constraint
+
+  # Topology extraction
+  topology:
+    max_homology_dim: 1        # Max homological dimension K (0 and 1)
+    persistence_image_resolution: [10, 10]  # PI grid resolution
+    persistence_image_sigma: 0.1            # PI Gaussian bandwidth
+    max_points_subsample: 500  # Subsample for efficiency
+    filtration_max_edge: 2.0   # Max edge length for Rips filtration
+
+# --- Data Configuration ---
+data:
+  dataset: "gaussian"          # Dataset type: gaussian, ica, ggm, financial, biological
+  data_dim: 50                 # Data dimensionality
+  num_samples: 5000            # Samples per dataset
+  truncated: false             # Truncated Gaussian variant
+  train_ratio: 0.8             # Train/test split
+  normalize: true              # Standardize data
+
+# --- Missingness Configuration ---
+missingness:
+  mechanism: "mcar"            # Missingness mechanism (mcar)
+  train_missing_rate: 0.4      # Training missingness rate
+  test_missing_rate: 0.4       # Test missingness rate
+  enable_shift: false          # Enable train/test missingness shift
+  shift_type: "structural"     # Type of shift: structural, rate
+
+# --- Output Configuration ---
+output:
+  checkpoint_dir: "checkpoints"
+  log_dir: "runs"
+  result_dir: "results"
+  save_every: 10               # Save checkpoint every N epochs
+
+# --- Hardware ---
+device: "auto"                 # auto, cuda, cpu
+seed: 42
+num_workers: 4

@@ -1,0 +1,45 @@
+# =============================================================================
+# Meta-TTA-TSM: Training Configuration
+# =============================================================================
+# Training-specific hyperparameters for meta-learning and test-time adaptation.
+
+# --- Meta-Learning ---
+meta_learning:
+  meta_lr: 1.0e-3              # Outer-loop learning rate (alpha_meta)
+  meta_optimizer: "adam"        # Optimizer for hypernetwork: adam, sgd
+  meta_weight_decay: 1.0e-5    # L2 regularization
+  num_meta_epochs: 200         # Number of meta-training epochs
+  tasks_per_batch: 8           # Number of tasks per meta-batch
+  num_tasks_total: 1000        # Total tasks to sample for training
+  meta_lr_scheduler: "cosine"  # LR scheduler: cosine, step, none
+  meta_lr_warmup_epochs: 10    # Warmup epochs for scheduler
+
+# --- Inner-Loop Adaptation ---
+inner_loop:
+  inner_lr: 1.0e-2             # Inner-loop learning rate (alpha_inner)
+  inner_steps: 5               # Number of inner-loop gradient steps (K)
+  first_order: false           # Use first-order MAML approximation
+  inner_optimizer: "sgd"       # Inner optimizer: sgd (standard for MAML)
+
+# --- Test-Time Adaptation ---
+test_time_adaptation:
+  enable: true                 # Enable TTA at inference
+  tta_lr: 5.0e-3               # TTA learning rate
+  tta_steps: 10                # Number of TTA gradient steps (K_adapt)
+  lambda_topo: 0.1             # Topological consistency weight (lambda_topo)
+  drift_threshold: 0.5         # Wasserstein distance threshold for drift (tau)
+  tta_optimizer: "sgd"         # TTA optimizer
+
+# --- Score Matching ---
+score_matching:
+  noise_type: "gaussian"       # Noise type for denoising SM (if used)
+  noise_std: 0.01              # Noise standard deviation
+  use_sliced_sm: false         # Use sliced score matching (for high dim)
+  num_slices: 10               # Number of slices for sliced SM
+
+# --- Training Logistics ---
+training:
+  gradient_clip_norm: 1.0      # Gradient clipping norm
+  early_stopping_patience: 20  # Early stopping patience (epochs)
+  eval_every: 5                # Evaluate every N epochs
+  log_every: 1                 # Log metrics every N epochs
